@@ -12,3 +12,7 @@ Jira,qase.io,SQL, Postman,Fiddler, Swagger, Trello,
 SoapUI, Android Studio, xCode, Charles, Git, Chrome DevTools.
 
 ### Проекты
+#### Курсовая работа №1
+Задача: проверить программный продукт для учителей.Аудитория более 3000. Крупнейшая международная школа английского языка.
+Продукт: www.skyeng.ru
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
