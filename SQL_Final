@@ -1,7 +1,6 @@
 TASK 1
 1 Составьте запрос, который выведет имя вида с наименьшим id. 
-select min(species_id) from species
-select species_name from species where species_id=1
+select species_name from species where species_id=(select min (species_id)from species)
 
 2 Составьте запрос, который выведет имя вида с количеством представителей более 1800.
 select species_name from species where species_amount>1800
@@ -17,17 +16,11 @@ TASK 2
 1 Составьте запрос, который выведет имя вида, появившегося на учете в 2023 году. 
 select * from species where TO_CHAR (date_start,'YYYY')='2023'
 
-2 Составьте запрос, который выведет названия отсутствующего (status = absent) вида, расположенного вместе с place_id = 3.
-select species.species_id, species.species_name, species.species_status,
-species_in_places.species_id, species_in_places.place_id
-from species inner join species_in_places
+select species.species_name from species inner join species_in_places
 on species.species_id = species_in_places.species_id
 where species_status='absent' and place_id=3
-
-3 Составьте запрос, который выведет название вида, расположенного в доме и появившегося в мае, а также и количество представителей вида.
-select species.species_name, species.species_id, species.date_start,
-species.species_amount, species_in_places.species_id, species_in_places.place_id 
-from species inner join species_in_places
+3
+select species.species_name from species inner join species_in_places
 on species.species_id=species_in_places.species_id
 where TO_CHAR (date_start,'MM')='05'
 
@@ -36,8 +29,9 @@ Select species_name from species where species_name like '% %'
 
 TASK 3
 1 Составьте запрос, который выведет имя вида, появившегося с малышом в один день. 
-select date_start from species where species_name='малыш'
-select species_name from species where date_start = '2022-10-04'
+Select species_name from species 
+WHERE date_start = (Select date_start from species WHERE species_name = 'малыш') AND  NOT species_name = 'малыш'
+
 
 2 Составьте запрос, который выведет название вида, расположенного в здании с наибольшей площадью.
 select place_name, place_id, place_size from places order by place_size desc
@@ -60,6 +54,6 @@ order by species_amount desc
 
 4 Составьте запрос, который выведет сказочный вид (статус fairy), не расположенный ни в одном месте.
 
-select * from species where species_status='fairy' /* species_id=7*/
-
-select exists (select * from species_in_places where species_id=7) /*boolean-false*/
+Select species_name from species 
+Left join species_in_places 
+on species.species_id = species_in_places.species_id where species_in_places.species_id is null
